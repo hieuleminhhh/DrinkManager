@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+img{
+width: 500px;
+height: 500px;
+}
+</style>
+<body>
+<form method="POST" action="/restdrink/upload" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><label>Select a file to upload</label></td>
+            <td><input type="file" name="file"  /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form>
+<img th:src="${filePath}" alt="Hình ảnh">
+<img src="/photo/abcd.jpg">
+<img src="/C:/Users/lenovo/Downloads/abcd.jpg">
+</body>
+
+</html>

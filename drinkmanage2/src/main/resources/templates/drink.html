@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Trang chủ</title>
+</head>
+<body>
+
+	<div th:replace="header :: header"></div>
+	<h1>Welcome to Fresh Drinks!</h1>
+	<p>We provide fresh, healthy drinking water for everyone.</p>
+	<div th:unless="${session.person}">
+		<form
+			th:action="@{/home(searchname=${searchname}, page=${currentPage})}"
+			method="get" th:object="${student}">
+			<p>
+				Enter Name: <input type="search" name="searchname"
+					th:value="${searchname}">
+				<button>Submit</button>
+			</p>
+		</form>
+	</div>
+	<div th:if="${session.person}">
+		<form
+			th:action="@{/drink(searchname=${searchname}, page=${currentPage})}"
+			method="get" th:object="${student}">
+			<p>
+				Enter Name: <input type="search" name="searchname"
+					th:value="${searchname}">
+				<button>Submit</button>
+			</p>
+		</form>
+	</div>
+
+	<div class="table">
+		<table border="1">
+			<tr>
+				<th>Image</th>
+				<th>Name</th>
+				<th>Price</th>
+				<div th:unless="${session.person}">
+					<th>Title</th>
+					<th>Category</th>
+				</div>
+				<div th:if="${session.person}">
+					<th></th>
+					<th>Quantity</th>
+					<th></th>
+				</div>
+				<th></th>
+			</tr>
+			<tr th:each="drink: ${listDrink}">
+				<td><img th:src="${drink.getDrinkImage()}" width="100"
+					height="100"></td>
+				<td><span th:text=${drink.getDrinkName()}></span></td>
+				<td><span th:text=${drink.getDrinkPrice()}></span></td>
+
+				<div th:unless="${session.person}">
+					<td><span th:text=${drink.getDrinkTitle()}></span></td>
+					<td><span th:text=${drink.category.getCategoryName()}></span></td>
+					<td><a th:href="@{/person/login}">Order</a></td>
+					</td>
+				</div>
+
+				<div th:if="${session.person}">
+					<td><a style="text-decoration: none"
+						th:href="@{/drink/quantity-/{id}/{pageNumber}(id=${drink.getDrinkId()}, pageNumber=${currentPage})}">-</a></td>
+					<td><span th:text=${drink.getDrinkQuantity()}></span></td>
+
+					<td><a style="text-decoration: none"
+						th:href="@{/drink/quantity+(searchname=${searchname}, page=${currentPage}, id=${drink.getDrinkId()})}">+</a></td>
+					<td><a th:href="@{/order/}+${drink.getDrinkId()}">Order</a></td>
+				</div>
+			</tr>
+		</table>
+		<div th:unless="${session.person}">
+			<span th:if="${totalPages > 0}"
+				th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+				th:href="@{/home(searchname=${searchname}, page=${i})}"><u>[[${i}]]</u></a>
+			</span> <span th:if="${totalPages == 0}">
+				<p style="color: red">Không tìm thấy kết quả!!!</p>
+			</span>
+		</div>
+		<div th:if="${session.person}">
+			<span th:if="${totalPages > 0}"
+				th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+				th:href="@{/drink(searchname=${searchname}, page=${i})}"><u>[[${i}]]</u></a>
+			</span> <span th:if="${totalPages == 0}">
+				<p style="color: red">Không tìm thấy kết quả!!!</p>
+			</span>
+		</div>
+
+
+
+	</div>
+
+
+	<div th:replace="footer :: footer"></div>
+</body>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f9f9f9;
+	color: #444;
+}
+
+h1 {
+	font-size: 36px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 50px;
+}
+
+p {
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 50px;
+	line-height: 1.5;
+}
+
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 50px;
+}
+
+input[type="search"] {
+	width: 300px;
+	padding: 8px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 16px;
+	margin-right: 10px;
+}
+
+button[type="submit"] {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #0062cc;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 50px;
+}
+
+th, td {
+	padding: 10px;
+	text-align: center;
+}
+
+th {
+	font-weight: bold;
+}
+
+th:first-child, td:first-child {
+	width: 20%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+	width: 30%;
+}
+
+th:last-child, td:last-child {
+	width: 15%;
+}
+
+a {
+	text-decoration: none;
+	color: #007bff;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pagination a {
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 18px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	color: #444;
+}
+
+.pagination a:hover {
+	background-color: #007bff;
+	color: #fff;
+}
+
+.pagination .active {
+	background-color: #007bff;
+	color: #fff;
+}
+</style>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div><label>Select a file to upload</label></div>
+    <input id="posing" type="file" name="file" onchange="displayImage()" />
+    <br>
+    <span><img id="preview" src="#" alt="Preview Image" style="display: none; max-width: 300px;"></span>
+    <br>
+    <a id="downloadLink" style="display: none;" onclick="return confirm('Are you sure?')" download>Download</a>
+    <button id="save">Save to Project</button>
+    <script>
+        function start() {
+            console.log("Start");
+            displayImage();
+            savePhoto();
+        }
+        start();
+
+        function displayImage() {
+            var fileInput = document.getElementById('posing');
+            var previewImg = document.getElementById('preview');
+            var downloadLink = document.getElementById('downloadLink');
+
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader(); //reader imgaes
+
+                reader.onload = function (e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'inline';
+                    var originalFileName = fileInput.files[0].name;
+
+                    console.log(originalFileName);
+                    downloadLink.href = e.target.result;
+                    downloadLink.download = originalFileName;
+                    downloadLink.style.display = 'inline';
+                }
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        function savePhoto(callback) {
+            var btnSave = document.getElementById('save');
+            btnSave.onclick = function () {
+                var fileInput = document.querySelector('input[name="file"]');
+                var file = fileInput.files[0];
+                var confirmation = confirm("Bạn có chắc chắn muốn lưu ảnh?");
+
+                if (confirmation) {
+                    var formData = new FormData();
+                    formData.append('file', file);
+
+                    var url = 'http://localhost:8088/restdrink/api';
+                    fetch(url, {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log(json);
+
+                        })
+                        .catch(error => console.error('Error:', error));
+                } else {
+                    console.log('Lưu ảnh đã bị hủy bỏ.');
+                }
+            };
+        }
+    </script>
+
+</body>
+
+</html>

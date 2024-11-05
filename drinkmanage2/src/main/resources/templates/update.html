@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Update Drink</title>
+</head>
+<body>
+	<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Update Drink</h1>
+<form th:action="@{/drink/update}" method="post" th:object="${drink}">
+<div>
+ <label></label><br>
+ <input type="hidden" th:field="*{drinkId}" >
+ </div>
+ <div>
+ <label>Drink Name:</label><br>
+ <input type="text" th:field="*{drinkName}" >
+ </div>
+<div>
+ <label>Drink Title:</label><br>
+ <input type="text" th:field="*{drinkTitle}">
+ </div>
+ <div>
+ <label>Drink Price:</label><br>
+ <input type="number" th:field="*{drinkPrice}">
+ </div>
+  <div>
+ <label>Drink Image:</label><br>
+ <input type="text" th:field="*{drinkImage}">
+ </div>
+<button class="submit-button">Submit</button>
+	</form>
+	<form th:action="@{/drink/back}">
+		<button class="back-button">Back</button>
+	</form>
+<style>
+	body {
+		background-color: #f2f2f2;
+		font-family: Arial, sans-serif;
+	}
+
+	h1 {
+		text-align: center;
+		color: #333;
+	}
+
+	form {
+		margin: 0 auto;
+		width: 50%;
+		padding: 20px;
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+	}
+
+	label {
+		display: block;
+		margin-bottom: 5px;
+		color: #666;
+	}
+
+	input[type=text], input[type=number] {
+		padding: 8px;
+		width: 100%;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		margin-bottom: 15px;
+		font-size: 16px;
+		color: #333;
+	}
+
+	.submit-button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: right;
+	margin-top: 40px;
+}
+.back-button{
+background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	float: left;
+}
+
+	button:hover {
+		background-color: #45a049;
+	}
+	.back-button {
+	background-color: #f44336;
+}
+
+.submit-button {
+	background-color: #4CAF50;
+}
+</style>
+</body>
+</html>
+</body>
+</html>

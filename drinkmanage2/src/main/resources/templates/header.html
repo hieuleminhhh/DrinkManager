@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Header</title>
+    <style>
+        nav {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+        }
+
+        ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all .2s ease-in-out;
+        }
+
+        a:hover {
+            color: #f9f9f9;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        span {
+            color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+<main>
+<header>
+    <nav>
+        <ul>
+            
+            
+            <div th:unless="${session.person}">
+            	<li><a href="/home">Home</a></li>
+            	<li><a href="#">Contact</a></li>
+                <li><a href="/person/login">Login</a></li>
+                <li><a href="/person/signup">Signup</a></li>
+            </div>
+            <div th:if="${session.person}">           		
+            		<li><a href="/drink/refresh">Home</a></li>
+                <th:block th:if="${session.person.getPersonRole() == 1}">               
+                    <li><a href="/drink/manage">Manage Drink</a></li>
+                    <li><a href="/odetail">Manage Order</a></li>
+                    <li><a href="/odetail/totalOrder">Total Order</a></li>
+                </th:block>
+                <li><a href="/person/logout">Logout</a></li>
+                <li>
+                    <h3 style="color: green;">Hello, <span th:text="${session.person.getPersonEmail()}"></span></h3>
+                </li>
+                
+                <li><a href="/order">View Order </a><i style="color: red">([[${num}]])</i></li>
+                
+            </div>
+        </ul>
+    </nav>
+</header>
+</main>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Order List</title>
+</head>
+<body>
+    <h1>Order List </h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Total_Price</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+ <tbody>
+    <tr th:each="order : ${listOrder}">
+        <td><span th:text="${order.person.getPersonName()}"></span></td>
+        <td><span th:text="${order.getQuantity()}"></span></td>
+        <td><span th:text="${order.getTotalPrice()}"></span></td>
+        <td><span th:text="${order.getStatus()}"></span></td>
+        <td>
+            <ul>
+                <li th:each="detail : ${order.getOrderDetails()}">
+                    <span th:text="${detail.getDrink().getDrinkName()}"></span>
+                </li>
+            </ul>
+        </td>
+     
+        <td><a th:href="@{order/pay/}+${order.getOrderId()}">Pay</a></td>
+        <td><a th:href="@{order/delete/}+${order.getOrderId()}">Delete</a></td>
+        <td></td>
+    </tr>
+</tbody>
+        
+    </table>
+    Total All: <span th:text=${totalAll}></span>
+    <a href="/order/payall">PayAll</a>
+    <a href="/order/deleteall">DeleteAll</a>
+    <form th:action="@{/order/back}">
+		<button class="back-button">Back</button>
+	</form>
+    
+</body>
+<style>h1 {
+    font-size: 36px;
+    color: #fff;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+a:hover {
+    background-color: #3e8e41;
+}</style>
+</html>

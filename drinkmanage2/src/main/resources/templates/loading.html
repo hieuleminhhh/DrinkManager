@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<style>
+    img {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<body>
+    <div id="photo">
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        function start() {
+            console.log("Start");
+            getPhoto();
+        }
+        start();
+
+        //FETCH API
+        function getPhoto(callback){
+            var url = 'http://localhost:8088/restdrink/api';
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const photo = document.getElementById('photo'); 
+                    console.log(data);
+                    console.log(photo);
+                    data.forEach(photos => {
+                        const div1 = document.createElement('div');
+                        div1.innerHTML = photos.file;
+                        const div2 = document.createElement('div');
+                        div2.innerHTML = photos.fileName;
+                        const div3 = document.createElement('img');
+                        div3.src = photos.fileName;
+
+                        photo.appendChild(div1);
+                        photo.appendChild(div2);
+                        photo.appendChild(div3);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        //XML HTTP REQUEST
+        // function getPhoto() {
+        //     const xhr = new XMLHttpRequest();
+        //     var url = 'http://localhost:8088/restdrink/api';
+        //     xhr.open('GET', url);
+        //     xhr.onload = function () {
+        //         if (xhr.status === 200) {
+        //             console.log(xhr.responseText);
+        //             const data = JSON.parse(xhr.responseText);
+        //             console.log(data);
+        //             data.forEach(photos => {
+        //                 const div1 = document.createElement('div');
+        //                 div1.innerHTML = photos.file;
+        //                 const div2 = document.createElement('div');
+        //                 div2.innerHTML = photos.fileName;
+        //                 const div3 = document.createElement('img');
+        //                 div3.src = photos.fileName;
+
+        //                 photo.appendChild(div1);
+        //                 photo.appendChild(div2);
+        //                 photo.appendChild(div3);
+        //             });
+                   
+        //         } else {
+        //             console.error('Error:', xhr.status);
+        //         }
+        //     };
+        //     xhr.send();
+        // }
+
+
+
+        //AXIOS
+        // function getPhoto() {
+        //     var url = 'http://localhost:8088/restdrink/api';
+        //     axios
+        //         .get(url)
+        //         .then((response) => {
+        //             console.log(response.data);
+        //             response.data.forEach(photos => {
+        //                 const div1 = document.createElement('div');
+        //                 div1.innerHTML = photos.file;
+        //                 const div2 = document.createElement('div');
+        //                 div2.innerHTML = photos.fileName;
+        //                 const div3 = document.createElement('img');
+        //                 div3.src = photos.fileName;
+
+        //                 photo.appendChild(div1);
+        //                 photo.appendChild(div2);
+        //                 photo.appendChild(div3);
+        //             });
+        //         })
+        //         .catch((error) => console.error(error));
+        // }
+
+        //JQUERY AJAX
+        // function getPhoto() {
+        //     $.ajax({
+        //         url: 'http://localhost:8088/restdrink/api',
+        //         method: 'GET',
+        //         success: function (data) {
+        //             console.log('???D?D?D?D?D?D?D?D?D');
+        //             console.log(data);
+        //             const jsonData = JSON.parse(data);
+        //             console.log(jsonData);
+        //             jsonData.forEach(photos => {
+        //                 const div1 = document.createElement('div');
+        //                 div1.innerHTML = photos.file;
+        //                 const div2 = document.createElement('div');
+        //                 div2.innerHTML = photos.fileName;
+        //                 const div3 = document.createElement('img');
+        //                 div3.src = photos.fileName;
+
+        //                 photo.appendChild(div1);
+        //                 photo.appendChild(div2);
+        //                 photo.appendChild(div3);
+        //             });
+        //         },
+        //         error: function (error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // }
+
+
+    </script>
+</body>
+
+</html>
